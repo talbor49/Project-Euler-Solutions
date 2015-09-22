@@ -61,9 +61,22 @@ public class EulerUtils {
         return dividers * 2;
     }
 
+    public static int[] stringToIntArr(String digits) {
+        int[] arr = new int[digits.length()];
+        for(int i = 0; i < digits.length(); i++) {
+            arr[i] = Integer.valueOf(String.valueOf(digits.charAt(i)));
+        }
+        return arr;
+    }
+
     public static long reverse(long num) {
         // So many conversions
         return Long.valueOf(new StringBuilder(String.valueOf(num)).reverse().toString());
+    }
+
+    public static String reverse(String str) {
+        // So many conversions
+        return new StringBuilder(str).reverse().toString();
     }
 
     public static BigInteger BigInteger_reverse(BigInteger num) {
@@ -195,6 +208,20 @@ public class EulerUtils {
         } catch (java.io.IOException e) {
             e.printStackTrace();
             return "";
+        }
+    }
+
+    public static List<String> readLines(String name) {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/problems/src/main/resources/" + name))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines;
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            return lines;
         }
     }
 
