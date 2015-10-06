@@ -7,6 +7,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+class Digit {
+
+    private List<Integer> after;
+    private List<Integer> before;
+    private char dig;
+
+    public Digit(char dig) {
+        this.dig = dig;
+    }
+}
+
 public class Solution79 {
 
     public static void main(String[] args) {
@@ -17,6 +28,13 @@ public class Solution79 {
         // 435
         // total 12435
         Set<String> data = new HashSet<>(EulerUtils.readLines("problem79.txt"));
+
+        List<Digit> digits = new ArrayList<Digit>();
+        for (String str : data) {
+            int[] digs = EulerUtils.stringToIntArr(str);
+
+        }
+        /*
         List<Integer> digits = new ArrayList<>(25);
         for (String str : data) {
             int[] digs = EulerUtils.stringToIntArr(str);
@@ -30,5 +48,6 @@ public class Solution79 {
                 }
             }
         }
+        */
     }
 }
