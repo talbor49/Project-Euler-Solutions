@@ -16,6 +16,16 @@ public class EulerUtils {
     private final static BigInteger TWO = new BigInteger("2");
     private final static SecureRandom random = new SecureRandom();
 
+
+
+    public static int sumOfList(List<Integer> list) {
+        int sum = 0;
+        for(int i = 0; i < list.size(); i++) {
+            sum += list.get(i);
+        }
+        return sum;
+    }
+
     public static boolean isPrime(long num) {
         if (num == 2 | num == 3) {
             return true;
@@ -265,6 +275,15 @@ public class EulerUtils {
         return sumOfDigits;
     }
 
+    public static long sumOfDigits(long num) {
+        int sumOfDigits = 0;
+        while (num != 0) {
+            sumOfDigits += num % 10;
+            num /= 10;
+        }
+        return sumOfDigits;
+    }
+
     //Copied from StackOverFlow ;)
     public static boolean[] sieveOfAtkins(int limit) {
         boolean[] sieve = new boolean[limit + 1];
@@ -380,5 +399,103 @@ public class EulerUtils {
             factors.add(n);
         }
         return factors;
+    }
+
+    //COPIED FROM INTERNET, TODO: SHOULD MAKE ONE MYSELF :)
+    public static List<List<Integer>> uniquePartitions(int n)
+    {
+        List<List<Integer>> ways = new ArrayList<>();
+
+        int[] p = new int[n]; // An array to store a partition
+        int k = 0;  // Index of last element in a partition
+        p[k] = n;  // Initialize first partition as number itself
+
+        // This loop first prints current partition, then generates next
+        // partition. The loop stops when the current partition has all 1s
+        while (true)
+        {
+            // add current partition
+            List<Integer> way = new ArrayList<>();
+            for (int i = 0; i < k + 1; i++) {
+                way.add(p[i]);
+            }
+            ways.add(way);
+
+            // Generate next partition
+
+            // Find the rightmost non-one value in p[]. Also, update the
+            // rem_val so that we know how much value can be accommodated
+            int rem_val = 0;
+            while (k >= 0 && p[k] == 1)
+            {
+                rem_val += p[k];
+                k--;
+            }
+
+            // if k < 0, all the values are 1 so there are no more partitions
+            if (k < 0)
+                return ways;
+
+            // Decrease the p[k] found above and adjust the rem_val
+            p[k]--;
+            rem_val++;
+
+
+            // If rem_val is more, then the sorted order is violeted.  Divide
+            // rem_val in differnt values of size p[k] and copy these values at
+            // different positions after p[k]
+            while (rem_val > p[k])
+            {
+                p[k+1] = p[k];
+                rem_val = rem_val - p[k];
+                k++;
+            }
+
+            // Copy rem_val to next position and increment position
+            p[k+1] = rem_val;
+            k++;
+        }
+    }
+
+    //COPIED FROM INTERNET, TODO: SHOULD MAKE ONE MYSELF :)
+    public static List<List<Integer>> permute(List<Integer> num) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        //start from an empty list
+        result.add(new ArrayList<Integer>());
+
+        for (int i = 0; i < num.size(); i++) {
+            //list of list in current iteration of the array num
+            ArrayList<ArrayList<Integer>> current = new ArrayList<ArrayList<Integer>>();
+
+            for (List<Integer> l : result) {
+                // # of locations to insert is largest index + 1
+                for (int j = 0; j < l.size()+1; j++) {
+                    // + add num[i] to different locations
+                    l.add(j, num.get(i));
+
+                    ArrayList<Integer> temp = new ArrayList<Integer>(l);
+                    current.add(temp);
+
+                    //System.out.println(temp);
+
+                    // - remove num[i] add
+                    l.remove(j);
+                }
+            }
+
+            result = new ArrayList<>(current);
+        }
+
+        return result;
+    }
+
+    public static int convertListOfDigitsToNumber(List<Integer> list) {
+        int length = list.size();
+        int num = 0;
+        for(int i = 0; i < length; i++) {
+            num += Math.pow(10, length - i) * list.get(i);
+        }
+        return num;
     }
 }
