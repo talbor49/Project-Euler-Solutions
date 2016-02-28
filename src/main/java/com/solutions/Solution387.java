@@ -21,21 +21,38 @@ public class Solution387 {
         maxDigitsNumber = 999
         maxDigitsSum = 3 * 9
          */
-        long MAX = (long) Math.pow(10, 7);
+        long MAX = (long) Math.pow(10, 8);
 
         long sum = 0;
         int maxDigitsSum = String.valueOf(MAX-1).length() * 9;
-        for(int i = 1; i < maxDigitsSum; i++) {
-            for (int mul = 1; i * mul * 10 < MAX; mul++) {
-                int newNum = i * mul;
-                if (EulerUtils.sumOfDigits(newNum) == i && EulerUtils.isPrime(mul)
-                        && rightTruncatable(newNum) && hasPrimeBro(newNum)) {
+        // I get the same result when starting from digitsSum 3 as in when i start from 2 or 1. If mistake, change back
+        for(int digitsSum = 3; digitsSum < maxDigitsSum; digitsSum++) {
+
+            long newNum2 = digitsSum * 2;
+            if (EulerUtils.sumOfDigits(newNum2) == digitsSum && EulerUtils.isPrime(2)
+                    && rightTruncatable(newNum2)) {
+
+                int[] possibleDigits = {1, 3, 7, 9};
+                for (int possibleDigit : possibleDigits) {
+                    long theNumber = newNum2*10 + possibleDigit;
+                    if ( theNumber <= MAX
+                            && EulerUtils.isPrime(theNumber)) {
+                        sum += theNumber;
+                    }
+                }
+            }
+
+            for (long mul = 3; digitsSum * mul * 10 < MAX; mul+= 2) {
+                long newNum = digitsSum * mul;
+                if (EulerUtils.sumOfDigits(newNum) == digitsSum && EulerUtils.isPrime(mul)
+                        && rightTruncatable(newNum)) {
 
                     int[] possibleDigits = {1, 3, 7, 9};
                     for (int possibleDigit : possibleDigits) {
-                        if ( (newNum*10 + possibleDigit) <= MAX
-                             && EulerUtils.isPrime(newNum * 10 + possibleDigit)) {
-                            sum += newNum*10 + possibleDigit;
+                        long theNumber = newNum*10 + possibleDigit;
+                        if ( theNumber <= MAX
+                             && EulerUtils.isPrime(theNumber)) {
+                            sum += theNumber;
                         }
                     }
                 }
