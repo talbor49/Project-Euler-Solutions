@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Solution76 {
 
-    public final int LIMIT = 100;
+    public static final int LIMIT = 100;
 
     public static long[] waysToWrite = new long[LIMIT+1];
 
